@@ -6,28 +6,29 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Getter
-@Setter
 @Entity
 public class User extends AuditableAbstractAggregateRoot<User> {
     @NotBlank
+    @Getter
     @Size(max = 50)
     @Column(unique = true)
     private String username;
 
+    @Getter
     @NotBlank
     @Size(max = 120)
     private String password;
 
+    @Getter
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     public User() {
         this.roles = new HashSet<>();
@@ -49,8 +50,8 @@ public class User extends AuditableAbstractAggregateRoot<User> {
     }
 
     public User addRoles(List<Role> roles) {
-        var validatedRoles = Role.validateRoleSet(roles);
-        this.roles.addAll(validatedRoles);
+        //var validatedRoles = Role.validateRoleSet(roles);
+        this.roles.addAll(roles);
         return this;
     }
 }
