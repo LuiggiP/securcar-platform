@@ -14,7 +14,7 @@
 	<name>securcar-platform</name>
 	<description>Backend for securcar with Spring, DDD and patterns</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>22</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
